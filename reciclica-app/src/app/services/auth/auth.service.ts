@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user/User';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import * as firebase from 'firebase/compat/app'
+import * as firebase from 'firebase/compat/app';
+import { UserRegister } from 'src/app/model/user/UserRegister';
 
 // import * as firebase from 'firebase';
 
@@ -12,6 +13,19 @@ import * as firebase from 'firebase/compat/app'
 export class AuthService {
 
   constructor(private auth: AngularFireAuth) { }
+
+  register(userRegister: UserRegister): Observable<void> {
+    return new Observable<void>(observer => {
+      setTimeout(() => {
+        if (userRegister.email == 'error@gmail.com') {
+          observer.error({message: 'email already registered'});
+        } else {
+          observer.next();
+        }
+        observer.complete();
+      }, 3000)
+    });
+  }
 
   recoverEmailPassword(email: string) : Observable<void> {
     return new Observable<void>(observer =>{
